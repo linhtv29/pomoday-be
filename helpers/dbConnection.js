@@ -6,6 +6,7 @@ const connectDB = (atlasURI) => {
     useCreateIndex: false,
     useFindAndModify: false,
     useUnifiedTopology: true,
+    autoIndex: false,
   });
 };
 
