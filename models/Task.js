@@ -26,6 +26,7 @@ const TaskSchema = new mongoose.Schema({
   userWantToLogin: Boolean,
   authToken: String,
   userName: String,
+  userId: String,
   severUrl: String,
   filterBy: String,
   lastSync: Number,
