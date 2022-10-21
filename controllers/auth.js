@@ -19,7 +19,7 @@ const register = asyncWrapper(async (req, res) => {
   });
   res
     .status(StatusCodes.CREATED)
-    .json({ userId: user._id});
+    .json({ userId: user._id });
 });
 
 const login = asyncWrapper(async (req, res) => {
