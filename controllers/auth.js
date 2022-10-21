@@ -32,15 +32,17 @@ const login = asyncWrapper(async (req, res) => {
   }
   const user = await User.findOne({ userName });
   if (!user) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .send({ message: "invalid user name or password" });
+    // return res
+    //   .status(StatusCodes.BAD_REQUEST)
+    //   .send({ message: "invalid user name or password" });
+    throw new Error({ message: "invalid user name or password" })
   }
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .send({ message: "invalid user name or password" });
+    // return res
+    //   .status(StatusCodes.BAD_REQUEST)
+    //   .send({ message: "invalid user name or password" });
+    throw new Error({ message: "invalid user name or password" })
   }
   const token = user.createJWT();
   res.status(StatusCodes.OK).json({ userName: user.userName, authToken: token });
