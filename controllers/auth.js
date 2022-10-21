@@ -19,7 +19,7 @@ const register = asyncWrapper(async (req, res) => {
   });
   res
     .status(StatusCodes.CREATED)
-    .json({ user: { userName: user.userName }, token });
+    .json({ userId: user._id});
 });
 
 const login = asyncWrapper(async (req, res) => {
@@ -43,7 +43,7 @@ const login = asyncWrapper(async (req, res) => {
       .send({ message: "invalid user name or password" });
   }
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ user: { userName: user.usesName }, token });
+  res.status(StatusCodes.OK).json({ userName: user.userName, authToken: token });
 });
 
 module.exports = {
