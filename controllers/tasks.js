@@ -2,12 +2,18 @@ const Task = require('../models/Task')
 const asyncWrapper = require('../helpers/asyncWrapper')
 
 const getTasks = asyncWrapper(async (req, res) => {
-	const task = await Task.find({})
+	const userId = req.user.userId
+	const task = await Task.find({userId})
 	res.status(201).json({task})
 })
 
 const updateTasks = asyncWrapper(async (req, res) => {
-	const task = await Task.findOneAndReplace({}, req.body)
+	const userId = req.user.userId
+	const tasksUpdated = {
+		...req.body,
+		userId
+	}
+	const task = await Task.findOneAndReplace({userId}, tasksUpdated)
 	res.status(200).json({task})
 })
 
