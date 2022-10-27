@@ -45,7 +45,8 @@ const login = asyncWrapper(async (req, res) => {
     throw new Error({ message: "invalid user name or password" })
   }
   const token = user.createJWT();
-  res.status(StatusCodes.OK).json({ userName: user.userName, authToken: token });
+	const data = await Task.findOne({userId: user._id})
+  res.status(StatusCodes.OK).json({ userName: user.userName, authToken: token, tasks: data.tasks });
 });
 
 module.exports = {
