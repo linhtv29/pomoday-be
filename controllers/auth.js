@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Task = require("../models/Task");
 const asyncWrapper = require("../helpers/asyncWrapper");
 const { StatusCodes } = require("http-status-codes");
+const HttpErrors = require('../helpers/HttpErrors')
 
 const register = asyncWrapper(async (req, res) => {
   const isDuplicateName = await User.findOne({ userName: req.body.userName });
@@ -32,17 +33,11 @@ const login = asyncWrapper(async (req, res) => {
   }
   const user = await User.findOne({ userName });
   if (!user) {
-    // return res
-    //   .status(StatusCodes.BAD_REQUEST)
-    //   .send({ message: "invalid user name or password" });
-    throw new Error({ message: "invalid user name or password" })
+    throw new HttpErrors( "invalid user name or password", StatusCodes.BAD_REQUEST)
   }
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    // return res
-    //   .status(StatusCodes.BAD_REQUEST)
-    //   .send({ message: "invalid user name or password" });
-    throw new Error({ message: "invalid user name or password" })
+    throw new HttpErrors( "invalid user name or password", StatusCodes.BAD_REQUEST)
   }
   const token = user.createJWT();
 	const data = await Task.findOne({userId: user._id})
